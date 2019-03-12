@@ -50,7 +50,11 @@ class TextData(Dataset):
         self.classes = lookUp
         rs = self.generateDocFeature()
         self.segData['vec'] = rs
-        self.data = [i for i in zip(list(self.segData['vec']),list(self.segData[labelIndex]))]
+
+        numLabel = []
+        for i in list(self.segData[labelIndex]):
+            numLabel.append(self.classes[i])
+        self.data = [i for i in zip(list(self.segData['vec']),list(numLabel))]
 
     def generateDocFeature(self):
         """
