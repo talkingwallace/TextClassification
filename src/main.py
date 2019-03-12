@@ -17,16 +17,15 @@ from src.embedding import loadEmbedding
 import gensim
 from gensim.models import Word2Vec
 from gensim.models.callbacks import CallbackAny2Vec # 记录 callback 用
-# 分词
-df = dl.loadSmallSmplData()
-rs = sg.makeCorpus(df)
 
-with open('segSmpl.pkl', 'wb') as f:
-    pickle.dump(rs,f)
+# # 分词
+# df = dl.loadSmallSmplData()
+# rs = sg.makeCorpus(df)
 #
-# 保存分词结果
-df['content'] = rs
-df.to_json('segSmpl.json')
+# #
+# # 保存分词结果
+# df['content'] = rs
+# df.to_json('segSmpl.json')
 
 df = loadSegmentedData()
 
@@ -40,4 +39,4 @@ print(len(model.wv.vocab))
 
 td = dl.TextData(model,df)
 
-
+print(len(td))
