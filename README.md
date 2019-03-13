@@ -11,4 +11,4 @@ https://drive.google.com/open?id=1EAiWlBCVIa_5GMHZJJ37N8vIIg0wPv13
 
 # 表现
 ## 小数据集
-2019.3.13 word2vec + MLP 86.3%
+2019.3.13 word2vec + MLP(50->25->3) 86.3%
