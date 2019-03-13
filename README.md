@@ -10,8 +10,8 @@ https://drive.google.com/open?id=1IUiukBpiv43nTFxCRa2ovJ5ence0G-VL
 https://drive.google.com/open?id=1EAiWlBCVIa_5GMHZJJ37N8vIIg0wPv13
 
 # 表现
-小数据集
+## 小数据集
 
-date            method            train       percision
+date____________method___________train_________percision
 
 2019.3.13 word2vec + MLP     smallSmpl.csv      86.3%
