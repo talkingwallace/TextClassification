@@ -1,11 +1,7 @@
-from torch.utils.data import random_split
 import torch
 # 得到训练测试集合
 
-def TextDataLoader(dataset,batch_size,frac=0.9):
-    trainLen = int(len(dataset)* frac)
-    train, test = random_split(dataset, [ trainLen, len(dataset)-trainLen])
-    return torch.utils.data.DataLoader(train,batch_size=batch_size,shuffle=True),torch.utils.data.DataLoader(test,batch_size=batch_size,shuffle=True)
+
 
 class Trainer(object):
 

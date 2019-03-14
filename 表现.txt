@@ -1,0 +1,6 @@
+method	        dataset	        percision
+w2v+MLP(50 25 3) smallsmpl.csv       87.6%
+w2v+KNN(5)     ~ up              87.5%
+w2v+KNN(9,10)     ~ up           88.0%
+w2v+MLP           ~up            88.6%
+w2v+RandomForest                 88.06%

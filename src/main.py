@@ -8,14 +8,14 @@
 import pickle
 import pandas as pd
 import Dataset.DataLoader as dl
-import src.segmentation as sg
-from src.segmentation import loadSegmentedData
-from src.embedding import trainEmbedding
-from src.embedding import loadEmbedding
+from Dataset.segmentation import loadSegmentedData
+from Dataset.embedding import trainEmbedding
+from Dataset.embedding import loadEmbedding
 from src.NetworkTrainer import Trainer
 from src.Network import SimpleClasifier
+from src.Network import DeeperClassifier
 import torch
-from src.NetworkTrainer import TextDataLoader
+from Dataset.DataLoader import TextDataLoader
 
 # word2vec 词嵌入
 import gensim
@@ -50,19 +50,20 @@ td = pickle.load(f)
 
 # 参数
 para = {
-    'num_epoch': 120, # 代数
+    'num_epoch': 50, # 代数
     'batch_size': 5000,
-    'lr': 0.01, # learning rate
+    'lr': 0.005, # learning rate
     'categoryNums':3, # 3个类
     'useGPU':True, # 开启GPU模式
     'saveEveryEpochs':10, # 每多少代保存一次模型
     'willDecay':True, # 学习率是否衰减
-    'learningDecay':0.1,
-    'decayWhen':30 # 每三十代decay
+    'learningDecay':0.5,
+    'decayWhen':10 # 每三十代decay
 }
 
 # 训练简单的神经网络分类器
-net = SimpleClasifier(50,25,3).cuda()
+# net = SimpleClasifier(50,25,3).cuda()
+net = DeeperClassifier([50,120,60,30,15],3).cuda()
 
 # 使用SGD优化器 传入网络参数与学习率lr
 optimizer = torch.optim.Adam(net.parameters(),lr=para['lr'],)
