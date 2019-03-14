@@ -1,15 +1,15 @@
 import pandas as pd
 from torch.utils.data import Dataset
 import numpy as np
-
+from torch.utils.data import random_split
+from os import path
+filePath = path.dirname(__file__)
+import torch
 # 路径测试用
 # import sys
 # sys.path.append(r'D:\CityU_CS\CS5483_DataMining\TextClassification')
 # import os
 # os.chdir(r'D:\CityU_CS\CS5483_DataMining\TextClassification\Dataset')
-
-from os import path
-filePath = path.dirname(__file__)
 
 def loadSmallSmplData():
     """
@@ -21,6 +21,21 @@ def loadSmallSmplData():
     except:
         print('cant find smallData.csv')
         return None
+
+def splitDataset(dataset,frac=0.9):
+    """
+    frac: 训练集比例
+    pytorch dataset 进行分割 分割为训练集 测试集
+    :return:
+    """
+    trainLen = int(len(dataset) * frac)
+    train, test = random_split(dataset, [trainLen, len(dataset) - trainLen])
+    return train,test
+
+
+def TextDataLoader(dataset,batch_size,frac=0.9):
+    train,test = splitDataset(dataset,frac=frac)
+    return torch.utils.data.DataLoader(train,batch_size=batch_size,shuffle=True),torch.utils.data.DataLoader(test,batch_size=batch_size,shuffle=True)
 
 
 class TextData(Dataset):
