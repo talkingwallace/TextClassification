@@ -1,18 +1,23 @@
 Quin 大秦话 // TO FILTER
+恶俗-狼粉 
+火星文 //TO MADE
+人民日报正能量 // TO FILTER
+
+JOJO梗 // TO 
+白学 // TO FILTER 标签传播
+刃牙 // TO FILTER
 蛤丝 // TO FILTER
 抽象话 // TO FILTER
-六学 // TO FILTER
-恶俗-狼粉 // 张笛 TO FILTER
 
-白学 // TO FILTER TODO
-广东话// TO FILTER
-刃牙 // TO DO
-火星文 //TO DO
-人民日报正能量 // TO DO
-JOJO梗 // TO DO
+淫梦民 
 
-淫梦民 ok
-哲♂学 ok
+
+
+other 头条新闻 中华城市 明星
+
+过滤清单:
+广东话ok
 淋语 ok
+六学 ok
+哲♂学 ok
 
-other 头条新闻

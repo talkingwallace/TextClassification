@@ -3,7 +3,7 @@ from os import path
 import pandas as pd
 
 filePath = path.dirname(__file__)
-user_dict = ['_',]
+user_dict = ['_____',]
 
 def getSegFunc():
     return pkuseg.pkuseg(model_name= r'../resources/weibo_seg',user_dict=user_dict)
