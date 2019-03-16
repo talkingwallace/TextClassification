@@ -17,3 +17,13 @@ for i in key:
         continue
     keys.append(i.split(' '))
 
+# 过滤
+
+
+# 分词
+
+
+# 嵌入
+
+
+# 生成特征文档
