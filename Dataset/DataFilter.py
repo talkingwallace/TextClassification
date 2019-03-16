@@ -183,23 +183,31 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df = processAclass(df_zx,defaultFilters,labelName='zhexue',keywords=kws)
 # df.to_csv(FilterDataPath+r'zhexue.csv')
 
-# # 银梦
-# def NoManSymbol(target): # no ♂
-#     if '♂' in target:
-#         return False
-#     return True
-#
-# def ymfilter(target): # 淫梦厨专用
-#     rs = re.search('([^,.a-zA-Z]\s){2,100}.', target) # 找 出 打 字 带 空 格 的
-#     if rs!= None:
-#         target = target.replace(rs.group(),rs.group().replace(' ','_____'))
-#     return target
-#
-# df_ym1 = pd.read_csv(RawDataPath+'zxydym.csv')
-# df_ym2 = pd.read_csv(RawDataPath+'zxyzym.csv')
-# df_ym = pd.concat([df_ym1,df_ym2])
-# defaultFilters.append(ymfilter)
-# df = processAclass(df_ym,defaultFilters,'ym',minLen=4)
+# 银梦
+def NoManSymbol(target): # no ♂
+    if '♂' in target:
+        return False
+    return True
+
+def ymfilter(target): # 淫梦厨专用
+    rs = re.search('([^,.a-zA-Z]\s){2,100}.', target) # 找 出 打 字 带 空 格 的
+    if rs!= None:
+        target = target.replace(rs.group(),rs.group().replace(' ','_____'))
+    return target
+
+def jingxueFilter(target): # 过滤掉京学相关
+    for i in ['爱慕','拆尼斯','拆你死','拆腻子','某些人自卑','十几个雇佣兵','人的片子','不能强','无罪','吴罪','鉴不鉴','贱不贱','我就怼']:
+        if i in target:
+            return False
+    return True
+
+df_ym1 = pd.read_csv(RawDataPath+'zxydym.csv')
+df_ym2 = pd.read_csv(RawDataPath+'zxyzym.csv')
+df_ym = pd.concat([df_ym1,df_ym2])
+defaultFilters.append(ymfilter)
+defaultFilters.append(jingxueFilter)
+df = processAclass(df_ym,defaultFilters,'ym',minLen=4,keywords=['通商','宽','萨','麦子','十里山路','仲夏夜之梦',
+                                                                '我年轻时就读过','山路','换肩','宽衣'])
 
 # other 正常人的评论(指以上群体都不是正常人)
 # df_mx = pd.read_csv(RawDataPath+'mingxing.csv')
@@ -208,7 +216,13 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df = processAclass(df,defaultFilters,'other',minLen=8,maxLen=100)
 # df.to_csv(FilterDataPath+'other.csv')
 
-df_lf1 = pd.read_csv(RawDataPath+r'zhangdi.csv')
-df_lf2 = pd.read_csv(RawDataPath+r'zhenggongshe.csv').drop(columns='time')
-df_lf = pd.concat([df_lf1,df_lf2])
-df = processAclass(df_lf,defaultFilters,'mlryj',minLen=5)
+# df_lf1 = pd.read_csv(RawDataPath+r'zhangdi.csv')
+# df_lf2 = pd.read_csv(RawDataPath+r'zhenggongshe.csv').drop(columns='time')
+# df_lf = pd.concat([df_lf1,df_lf2])
+# df = processAclass(df_lf,defaultFilters,'mlryj',minLen=5,maxLen=20000)
+# df.to_csv(FilterDataPath+'mlryj.csv')
+
+# df_fzl = pd.read_csv(RawDataPath+'baixue.csv')
+# df_2 = pd.read_csv(RawDataPath+'baisexiangbu2.csv')
+# df = pd.concat([df_fzl,df_2])
+# df = processAclass(df,defaultFilters,'baixue',keywords=['明明','这么熟练','腐朽的声音','碧池','小三','变成这样呢','两件','快乐事情','亲过多少次','也好','我先'],maxLen=50)

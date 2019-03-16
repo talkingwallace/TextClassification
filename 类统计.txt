@@ -1,23 +1,19 @@
 Quin 大秦话 // TO FILTER
-恶俗-狼粉 
 火星文 //TO MADE
 人民日报正能量 // TO FILTER
 
 JOJO梗 // TO 
-白学 // TO FILTER 标签传播
+白学 // TO FILTER
 刃牙 // TO FILTER
 蛤丝 // TO FILTER
 抽象话 // TO FILTER
-
-淫梦民 
-
-
-
-other 头条新闻 中华城市 明星
 
 过滤清单:
 广东话ok
 淋语 ok
 六学 ok
 哲♂学 ok
-
+other 头条新闻 中华城市 明星 ok
+淫梦民 ok
+恶俗-狼粉 ok
+京学 ok
