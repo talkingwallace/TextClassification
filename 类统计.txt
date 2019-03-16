@@ -1,6 +1,3 @@
-火星文 //TO MADE
-人民日报正能量 // TO FILTER
-
 JOJO梗 // TO 
 刃牙 // TO FILTER
 
@@ -17,3 +14,4 @@ other 头条新闻 中华城市 明星 ok
 京学 ok
 Quin 大秦话 ok
 蛤丝 ok
+火星文 ok

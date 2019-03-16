@@ -3,6 +3,7 @@
 import pandas as pd
 import re
 from Dataset.segmentation import getSegFunc
+from src.feizhuliuTransfer import  toMarsWords
 
 from os import path
 filePath = path.dirname(__file__) # 脚本地址
@@ -248,6 +249,12 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df = processAclass(df_sxc,[linkDetector,weiboReplyFilter,AtFilter,noHWangandPeitu],'goufensi',minLen=5)
 # df.to_csv(FilterDataPath+'goufensi.csv',index=False)
 
-df_hs = pd.read_csv(RawDataPath+'Sharon.csv')
-kws = loadKeyWords(RawDataPath+'hasi.txt')
-df = processAclass(df_hs,[linkDetector,weiboReplyFilter,AtFilter],'hasi',keywords=kws)
+# 蛤丝
+# df_hs = pd.read_csv(RawDataPath+'Sharon.csv')
+# kws = loadKeyWords(RawDataPath+'hasi.txt')
+# df = processAclass(df_hs,[linkDetector,weiboReplyFilter,AtFilter],'hasi',keywords=kws)
+
+# # 非主流 非主流是他妈手动转换的 我佛啦
+# df1 = pd.read_csv(RawDataPath+'feizhuliu.csv')
+# df = processAclass(df1,defaultFilters,'fzl',minLen=7)
+# df.to_csv(FilterDataPath+'feizhuliu.csv',index=False)
