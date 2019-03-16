@@ -11,9 +11,9 @@ from sklearn.ensemble import RandomForestClassifier
 
 import numpy as np
 # 加载小数据集
-f = open('dataset.pkl','br')
-td = pickle.load(f)
-train,test = splitDataset(td)
+# f = open('dataset.pkl','br')
+# td = pickle.load(f)
+# train,test = splitDataset(td)
 
 def dataSetToList(dataset):
     """
@@ -29,7 +29,7 @@ def dataSetToList(dataset):
     return features,labels
 
 # KNN
-def runAndTestKnn(train,test,n_neighbor = 6,speedUp = 'kd_tree',workers=-1,verbose = False):
+def runAndTestKnn(train,test,n_neighbor = 6,speedUp = 'kd_tree',workers=-1,verbose = False,runTest = True):
 
     print('start training')
     neigh = KNeighborsClassifier(n_neighbors=n_neighbor,algorithm=speedUp,n_jobs=workers)
@@ -37,32 +37,37 @@ def runAndTestKnn(train,test,n_neighbor = 6,speedUp = 'kd_tree',workers=-1,verbo
     neigh.fit(f,l)
     tst_f,tst_l = dataSetToList(test)
     print('testing.....')
-    accs = []
-    for i in range(0,100):
+
+    if runTest == True:
+        accs = []
+        for i in range(0, 10):
+            if verbose == True:
+                print('testing batch:', i)
+            acc = neigh.score(tst_f[i * 100:(i + 1) * 100], tst_l[i * 100:(i + 1) * 100])
+            if verbose == True:
+                print('acc of current batch', acc)
+            accs.append(acc)
         if verbose == True:
-            print('testing batch:',i)
-        acc = neigh.score(tst_f[i*100:(i+1)*100],tst_l[i*100:(i+1)*100])
-        if verbose == True:
-            print('acc of current batch',acc)
-        accs.append(acc)
-    if verbose == True:
-        print('acc of KNN:',np.mean(accs))
-    return np.mean(accs)
+            print('acc of KNN:', np.mean(accs))
+        print(np.mean(accs))
+    return neigh
 
 
 # Random Forest
-def runAndTestRF(train,test,):
+def runAndTestRF(train,test,runTest = True):
     print('start building RF')
     f, l = dataSetToList(train)
     t_f, t_l = dataSetToList(test)
     print('start traning......')
     forest = RandomForestClassifier(n_jobs=8,n_estimators=200,)
     forest.fit(f,l)
-    print('start testing.......')
-    acc = forest.score(t_f,t_l)
-    return acc
+    if runTest == True:
+        print('start testing.......')
+        acc = forest.score(t_f, t_l)
+        print(acc)
+    return forest
 
 # # test best para
 # for i in range(1,15):
 #     print(runAndTestKnn(train,test,n_neighbor=i))
-forest = runAndTestRF(train,test)
+# forest = runAndTestRF(train,test)
