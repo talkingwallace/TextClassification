@@ -142,6 +142,27 @@ def processAclass(df,filters,labelName,keywords=[],any=True,minLen=2,maxLen=100,
     processor = Filter(df, filters, labelName,minLen=minLen, maxLen=maxLen)
     return processor.runFilter()
 
+def getPatternFilter(patternList):
+    """
+    按照一些关键词模式来匹配
+    :param patternList:
+    :return:
+    """
+    def inTarget(target,l):
+        for i in l:
+            if not i in target:
+                return False
+        return True
+
+    def filter(target):
+        patternL = patternList
+        for i in patternL:
+            if inTarget(target,i):
+                return True
+        return False
+
+    return filter
+
 # 常用过滤器
 defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 
@@ -258,3 +279,21 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df1 = pd.read_csv(RawDataPath+'feizhuliu.csv')
 # df = processAclass(df1,defaultFilters,'fzl',minLen=7)
 # df.to_csv(FilterDataPath+'feizhuliu.csv',index=False)
+
+# df1 = pd.read_csv(RawDataPath+'renminribao.csv')
+# df = processAclass(df1,[linkDetector,weiboReplyFilter,AtFilter],'other')
+# df.to_csv(FilterDataPath+r'other2',index=False)
+
+# jojo
+f = open(RawDataPath+'jojo.txt')
+k = f.read()
+k = k.replace('\n','')
+key = k.split('##')
+keys = []
+for i in key:
+    if len(i) == 0:
+        continue
+    keys.append(i.split(' '))
+df_jojo = pd.read_csv(RawDataPath+'jojo.csv')
+# defaultFilters.append(getPatternFilter(keys))
+df = processAclass(df_jojo,defaultFilters,'jojo',keywords=['停止思考'])

@@ -27,3 +27,6 @@ def makeCorpus(df,contentIndex='content'):
 def loadSegmentedData():
     df = pd.read_json(filePath+r'\\'+r'segSmpl.json')
     return df
+
+def loadRawData():
+    pass
