@@ -22,7 +22,7 @@ class Filter():
     self.maxLen: 大于多少长度会被滤掉
     """
 
-    def __init__(self,df,filterList,labelName,minLen = 1,maxLen = 114514):
+    def __init__(self,df,filterList,labelName,minLen = 1,maxLen = 114514,keepRest = False):
         """
         df 是一个dataframe
         :param df:
@@ -38,10 +38,12 @@ class Filter():
         self.labelName = labelName
         self.minLen = minLen
         self.maxLen = maxLen
+        self.keepRest = keepRest
 
     def runFilter(self):
         contents = list(self.df[self.contentLabel])
         rs = []
+        rest = []
         for txt in contents:
 
             abandon = False
@@ -58,12 +60,19 @@ class Filter():
 
             if abandon == False and len(txt)>=self.minLen and len(txt)<=self.maxLen:
                 rs.append(txt)
+            else:
+                rest.append(txt)
 
         df = pd.DataFrame()
         df['content'] = rs
         df['label'] = [self.labelName] * len(rs)
 
-        return df
+        if self.keepRest == True:
+            restDf = pd.DataFrame()
+            restDf['content'] = rest
+            return df,restDf
+        else:
+            return df
 
 def tiebaReplyFilter(target): #过滤贴吧 格式（回复 xxxxx :）还有换行符
     target = re.sub('.*：', "", re.sub(r'.*:', "", target))
@@ -125,7 +134,7 @@ def loadKeyWords(path,cut=False):
         return seg.cut(txt)
     return txt.split(' ')
 
-def processAclass(df,filters,labelName,keywords=[],any=True,minLen=2,maxLen=100,):
+def processAclass(df,filters,labelName,keywords=[],any=True,minLen=2,maxLen=100,keepRest = False):
     """
     :param df: dataframe
     :param filters: 自己定义的过滤器
@@ -134,12 +143,13 @@ def processAclass(df,filters,labelName,keywords=[],any=True,minLen=2,maxLen=100,
     :param minLen: 样本最小长度
     :param maxLen: 样本最大长度
     :param labelName: 标签名
+    :param keepRest: 保留被筛掉的样本
     :return: dataframe
     """
 
     if len(keywords)>0:
         filters.append(getAkeywordFilter(keywords,any))
-    processor = Filter(df, filters, labelName,minLen=minLen, maxLen=maxLen)
+    processor = Filter(df, filters, labelName,minLen=minLen, maxLen=maxLen,keepRest=keepRest)
     return processor.runFilter()
 
 def getPatternFilter(patternList):
@@ -285,6 +295,7 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df.to_csv(FilterDataPath+r'other2',index=False)
 
 # jojo
+
 f = open(RawDataPath+'jojo.txt')
 k = f.read()
 k = k.replace('\n','')
@@ -294,6 +305,7 @@ for i in key:
     if len(i) == 0:
         continue
     keys.append(i.split(' '))
+
 df_jojo = pd.read_csv(RawDataPath+'jojo.csv')
 # defaultFilters.append(getPatternFilter(keys))
 df = processAclass(df_jojo,defaultFilters,'jojo',keywords=['停止思考'])
