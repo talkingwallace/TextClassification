@@ -1,14 +1,12 @@
-Quin 大秦话 // TO FILTER
 火星文 //TO MADE
 人民日报正能量 // TO FILTER
 
 JOJO梗 // TO 
-白学 // TO FILTER
 刃牙 // TO FILTER
-蛤丝 // TO FILTER
-抽象话 // TO FILTER
 
 过滤清单:
+白学 ok
+抽象话 ok
 广东话ok
 淋语 ok
 六学 ok
@@ -17,3 +15,5 @@ other 头条新闻 中华城市 明星 ok
 淫梦民 ok
 恶俗-狼粉 ok
 京学 ok
+Quin 大秦话 ok
+蛤丝 ok

@@ -69,7 +69,7 @@ def tiebaReplyFilter(target): #过滤贴吧 格式（回复 xxxxx :）还有换�
     target = target.replace('\n','')
     return target
 
-def filter2(target): #过滤微博的回复 格式 (ID: 回复 @xxxx :)
+def weiboReplyFilter(target): #过滤微博的回复 格式 (ID: 回复 @xxxx :)
     s = re.sub('.*:',"",re.sub(r'回复@.*:',"",target)) #可能存在中英两种 ':' '：'
     s = re.sub('.*：', "", re.sub(r'回复@.*：', "", s))
     return re.sub('@.* ',"",s)
@@ -184,30 +184,30 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df.to_csv(FilterDataPath+r'zhexue.csv')
 
 # 银梦
-def NoManSymbol(target): # no ♂
-    if '♂' in target:
-        return False
-    return True
-
-def ymfilter(target): # 淫梦厨专用
-    rs = re.search('([^,.a-zA-Z]\s){2,100}.', target) # 找 出 打 字 带 空 格 的
-    if rs!= None:
-        target = target.replace(rs.group(),rs.group().replace(' ','_____'))
-    return target
-
-def jingxueFilter(target): # 过滤掉京学相关
-    for i in ['爱慕','拆尼斯','拆你死','拆腻子','某些人自卑','十几个雇佣兵','人的片子','不能强','无罪','吴罪','鉴不鉴','贱不贱','我就怼']:
-        if i in target:
-            return False
-    return True
-
-df_ym1 = pd.read_csv(RawDataPath+'zxydym.csv')
-df_ym2 = pd.read_csv(RawDataPath+'zxyzym.csv')
-df_ym = pd.concat([df_ym1,df_ym2])
-defaultFilters.append(ymfilter)
-defaultFilters.append(jingxueFilter)
-df = processAclass(df_ym,defaultFilters,'ym',minLen=4,keywords=['通商','宽','萨','麦子','十里山路','仲夏夜之梦',
-                                                                '我年轻时就读过','山路','换肩','宽衣'])
+# def NoManSymbol(target): # no ♂
+#     if '♂' in target:
+#         return False
+#     return True
+#
+# def ymfilter(target): # 淫梦厨专用
+#     rs = re.search('([^,.a-zA-Z]\s){2,100}.', target) # 找 出 打 字 带 空 格 的
+#     if rs!= None:
+#         target = target.replace(rs.group(),rs.group().replace(' ','_____'))
+#     return target
+#
+# def jingxueFilter(target): # 过滤掉京学相关
+#     for i in ['爱慕','拆尼斯','拆你死','拆腻子','某些人自卑','十几个雇佣兵','人的片子','不能强','无罪','吴罪','鉴不鉴','贱不贱','我就怼']:
+#         if i in target:
+#             return False
+#     return True
+#
+# df_ym1 = pd.read_csv(RawDataPath+'zxydym.csv')
+# df_ym2 = pd.read_csv(RawDataPath+'zxyzym.csv')
+# df_ym = pd.concat([df_ym1,df_ym2])
+# defaultFilters.append(ymfilter)
+# defaultFilters.append(jingxueFilter)
+# df = processAclass(df_ym,defaultFilters,'ym',minLen=4,keywords=['通商','宽','萨','麦子','十里山路','仲夏夜之梦',
+#                                                                 '我年轻时就读过','山路','换肩','宽衣'])
 
 # other 正常人的评论(指以上群体都不是正常人)
 # df_mx = pd.read_csv(RawDataPath+'mingxing.csv')
@@ -216,13 +216,38 @@ df = processAclass(df_ym,defaultFilters,'ym',minLen=4,keywords=['通商','宽','
 # df = processAclass(df,defaultFilters,'other',minLen=8,maxLen=100)
 # df.to_csv(FilterDataPath+'other.csv')
 
+#狼粉
 # df_lf1 = pd.read_csv(RawDataPath+r'zhangdi.csv')
 # df_lf2 = pd.read_csv(RawDataPath+r'zhenggongshe.csv').drop(columns='time')
 # df_lf = pd.concat([df_lf1,df_lf2])
 # df = processAclass(df_lf,defaultFilters,'mlryj',minLen=5,maxLen=20000)
 # df.to_csv(FilterDataPath+'mlryj.csv')
 
+#白学
 # df_fzl = pd.read_csv(RawDataPath+'baixue.csv')
 # df_2 = pd.read_csv(RawDataPath+'baisexiangbu2.csv')
 # df = pd.concat([df_fzl,df_2])
 # df = processAclass(df,defaultFilters,'baixue',keywords=['明明','这么熟练','腐朽的声音','碧池','小三','变成这样呢','两件','快乐事情','亲过多少次','也好','我先'],maxLen=50)
+
+# 大秦话
+# df1 = pd.read_csv(RawDataPath+'Mr_Quin.csv')
+# df1.columns = ['content']
+# df2 = pd.read_csv(RawDataPath+'mrquin.csv').drop(columns=['time'])
+# df_quin = pd.concat([df1,df2])
+# df = processAclass(df_quin,defaultFilters,'quin',keywords=['秦','摸','狗头','黑暗','怕不是','rua','RUA',
+#                                                       'CMN','cmn''zaima','勃','歇了','神秘','25','二五','21','22','暗剑','黑楼','缺','惊了','堇','翼'
+#                                                            ,'白丝','唯一指定邮箱','梦里','nldg','NLDG','哪来的狗','香香鸡','鸡儿丢人','qnmd','guna','警犬','暗示','狗狗我',
+#                                                            ])
+# df.to_csv(FilterDataPath+'quin.csv',index=False)
+#
+# def noHWangandPeitu(target): # 滤掉黄网 评论配图
+#     if 'php' in target or '.com' in target or '评论配图' in target:
+#         return False
+#     return True
+# df_sxc = pd.read_csv(RawDataPath+r'sxc.csv')
+# df = processAclass(df_sxc,[linkDetector,weiboReplyFilter,AtFilter,noHWangandPeitu],'goufensi',minLen=5)
+# df.to_csv(FilterDataPath+'goufensi.csv',index=False)
+
+df_hs = pd.read_csv(RawDataPath+'Sharon.csv')
+kws = loadKeyWords(RawDataPath+'hasi.txt')
+df = processAclass(df_hs,[linkDetector,weiboReplyFilter,AtFilter],'hasi',keywords=kws)
