@@ -295,17 +295,17 @@ defaultFilters = [linkDetector,AtFilter,tiebaReplyFilter,]
 # df.to_csv(FilterDataPath+r'other2',index=False)
 
 # jojo
-
-f = open(RawDataPath+'jojo.txt')
-k = f.read()
-k = k.replace('\n','')
-key = k.split('##')
-keys = []
-for i in key:
-    if len(i) == 0:
-        continue
-    keys.append(i.split(' '))
-
-df_jojo = pd.read_csv(RawDataPath+'jojo.csv')
+#
+# f = open(RawDataPath+'jojo.txt')
+# k = f.read()
+# k = k.replace('\n','')
+# key = k.split('##')
+# keys = []
+# for i in key:
+#     if len(i) == 0:
+#         continue
+#     keys.append(i.split(' '))
+#
+# df_jojo = pd.read_csv(RawDataPath+'jojo.csv')
 # defaultFilters.append(getPatternFilter(keys))
-df = processAclass(df_jojo,defaultFilters,'jojo',keywords=['停止思考'])
+# df = processAclass(df_jojo,defaultFilters,'jojo')
