@@ -2,12 +2,8 @@
 亚文化文本分类,采集网络上的亚文化群体的评论、言论进行学习分类 目前一共采集了15个类
 
 # 须知
-## 小数据集
-下载下来后 在根目录创建一个 resources 文件 把下载的 weibo分词压缩包解压到里面:
-https://drive.google.com/open?id=1IUiukBpiv43nTFxCRa2ovJ5ence0G-VL
-
-这里有一个现成训练好的embedding model 放到src里面:
-https://drive.google.com/open?id=1EAiWlBCVIa_5GMHZJJ37N8vIIg0wPv13
+## 数据集
+现在的大文件都通过lfs管理 提交可就完事了
 
 ## 3.15 更新
 所有数据集及模型已通过git-lfs上传。git pull后即可食用。
