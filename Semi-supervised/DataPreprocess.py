@@ -118,8 +118,11 @@ f = open('dataset.pkl','br')
 td = pickle.load(f)
 trainer = Trainer(td.segData,trainFrac=0.9)
 neigh,test_pos = trainer.trainOnPos(runAndTestRF)
+
+print('making prediction')
 predict = neigh.predict(list(trainer.rest['vec']))
 trainer.rest['predict'] = predict
+
 
 # from src.Visualize import TsneVisualize
 # x1 = trainer.pos.sample(3000)

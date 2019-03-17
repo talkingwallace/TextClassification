@@ -54,6 +54,7 @@ def runAndTestKnn(train,test,n_neighbor = 2,speedUp = 'kd_tree',workers=-1,verbo
 
 
 # Random Forest
+
 def runAndTestRF(train,test,runTest = True):
     print('start building RF')
     f, l = train[0],train[1]
@@ -68,6 +69,7 @@ def runAndTestRF(train,test,runTest = True):
         predict = forest.predict(t_f)
         recall = recall_score(predict,t_l)
         print('recall',recall)
+
     return forest
 
 # # test best para
