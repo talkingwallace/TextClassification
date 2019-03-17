@@ -2,7 +2,7 @@
 
 import pickle
 from Dataset.DataLoader import splitDataset
-
+from sklearn.metrics import recall_score
 # KNN
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -29,13 +29,13 @@ def dataSetToList(dataset):
     return features,labels
 
 # KNN
-def runAndTestKnn(train,test,n_neighbor = 6,speedUp = 'kd_tree',workers=-1,verbose = False,runTest = True):
+def runAndTestKnn(train,test,n_neighbor = 2,speedUp = 'kd_tree',workers=-1,verbose = True,runTest = True):
 
     print('start training')
     neigh = KNeighborsClassifier(n_neighbors=n_neighbor,algorithm=speedUp,n_jobs=workers)
-    f,l = dataSetToList(train)
+    f,l = train[0],train[1]
     neigh.fit(f,l)
-    tst_f,tst_l = dataSetToList(test)
+    tst_f,tst_l = test[0],test[1]
     print('testing.....')
 
     if runTest == True:
@@ -56,15 +56,18 @@ def runAndTestKnn(train,test,n_neighbor = 6,speedUp = 'kd_tree',workers=-1,verbo
 # Random Forest
 def runAndTestRF(train,test,runTest = True):
     print('start building RF')
-    f, l = dataSetToList(train)
-    t_f, t_l = dataSetToList(test)
+    f, l = train[0],train[1]
+    t_f, t_l = test[0],test[1]
     print('start traning......')
     forest = RandomForestClassifier(n_jobs=8,n_estimators=200,)
     forest.fit(f,l)
     if runTest == True:
         print('start testing.......')
         acc = forest.score(t_f, t_l)
-        print(acc)
+        print('acc',acc)
+        predict = forest.predict(t_f)
+        recall = recall_score(predict,t_l)
+        print('recall',recall)
     return forest
 
 # # test best para

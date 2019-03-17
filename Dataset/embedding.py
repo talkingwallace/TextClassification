@@ -30,7 +30,7 @@ class EpochLogger(CallbackAny2Vec):
 def trainEmbedding(df,contentIndex = 'content',min_count = 1, iter = 30, window = 2, size = 50, workers = 8, savePath = 'embedding.model'): # 分词好的
     sentences = list(df[contentIndex])
     model = Word2Vec(sentences, min_count=min_count, iter=iter, window=window, size=size, workers=workers, )
-    model.save(filePath+'\\'+savePath)
+    model.save(savePath)
     return model
 
 def loadEmbedding(defaultName = 'embedding.model'):

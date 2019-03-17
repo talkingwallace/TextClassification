@@ -29,10 +29,10 @@ def dataSetToList(dataset):
 
     return features,labels
 
-from Dataset.DataLoader import splitDataset
-import pickle
-f = open('dataset.pkl','br')
-td = pickle.load(f)
-train,_ = splitDataset(dataset=td)
-f,l = dataSetToList(train)
-TsneVisualize(f[0:5000],l[0:5000])
+# from Dataset.DataLoader import splitDataset
+# import pickle
+# f = open('dataset.pkl','br')
+# td = pickle.load(f)
+# train,_ = splitDataset(dataset=td)
+# f,l = dataSetToList(train)
+# TsneVisualize(f[0:5000],l[0:5000])
