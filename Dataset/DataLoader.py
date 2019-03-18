@@ -3,6 +3,7 @@ from torch.utils.data import Dataset
 import numpy as np
 from torch.utils.data import random_split
 from os import path
+import os
 filePath = path.dirname(__file__)
 import torch
 # 路径测试用
@@ -37,6 +38,16 @@ def TextDataLoader(dataset,batch_size,frac=0.9):
     train,test = splitDataset(dataset,frac=frac)
     return torch.utils.data.DataLoader(train,batch_size=batch_size,shuffle=True),torch.utils.data.DataLoader(test,batch_size=batch_size,shuffle=True)
 
+def loadFullDataset(path = './FilteredData'):
+    fileList = os.listdir(path)
+    df = pd.DataFrame()
+    for i in fileList:
+        tmp = pd.read_csv(path+'/'+i)
+        # 只保留这两项
+        tmp = tmp[['content','label']]
+        df = pd.concat([df,tmp])
+
+    return df
 
 class TextData(Dataset):
 
@@ -99,3 +110,7 @@ class TextData(Dataset):
     def getTextContent(self,index):
         return self.segData.loc[index]
 
+
+if __name__ == '__main__':
+    print('testing...')
+    df = loadFullDataset()

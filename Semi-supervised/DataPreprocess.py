@@ -12,7 +12,7 @@ import pandas as pd
 from src.ClassicMethod import runAndTestRF
 from src.ClassicMethod import runAndTestKnn
 import numpy as np
-
+from sklearn.svm import SVC
 
 # 通过训练来不停的筛选新样本
 class Trainer():
@@ -27,19 +27,22 @@ class Trainer():
         self.rest['label'] = [2]*len(self.rest)
         self.frac = trainFrac
 
+    def generateDataForTraning(self):
+        self.train_pos = self.pos.sample(frac=self.frac)
+        self.test_pos = self.pos.drop(self.train_pos.index)
+        self.train_neg = self.neg.sample(frac=0.1)
+        # test_neg = self.neg.drop(train_neg.index)
+        self.train = pd.concat([self.train_pos, self.train_neg])
+        self.test = self.test_pos
+
     def trainOnPos(self,trainFunc):
         """
         传入一个训练函数 返回一个classfier
         :return:
         """
-        train_pos = self.pos.sample(frac=self.frac)
-        test_pos = self.pos.drop(train_pos.index)
-        train_neg = self.neg.sample(frac=self.frac)
-        # test_neg = self.neg.drop(train_neg.index)
-        train = pd.concat([train_pos,train_neg])
-        test = test_pos
-        classifier = trainFunc((list(train['vec']),list(train['label'])),(list(test['vec']),list(test['label'])))
-        return classifier,test_pos
+        self.generateDataForTraning()
+        classifier = trainFunc((list(self.train['vec']),list(self.train['label'])),(list(self.test['vec']),list(self.test['label'])))
+        return classifier,self.test_pos
 
     def getNewSamples(self,classifier):
         X = self.rest['vec']
@@ -117,11 +120,17 @@ def mannuallyTest(target,model,classifier):
 f = open('dataset.pkl','br')
 td = pickle.load(f)
 trainer = Trainer(td.segData,trainFrac=0.9)
-neigh,test_pos = trainer.trainOnPos(runAndTestRF)
-
-print('making prediction')
-predict = neigh.predict(list(trainer.rest['vec']))
-trainer.rest['predict'] = predict
+trainer.generateDataForTraning()
+svm = SVC(C=8.0,kernel='rbf',gamma='auto')
+svm.fit(list(trainer.train['vec']),list(trainer.train['label']))
+test = trainer.test_pos
+rs = svm.predict(list(test['vec']))
+print(rs.mean())
+# neigh,test_pos = trainer.trainOnPos(runAndTestRF)
+#
+# print('making prediction')
+# predict = neigh.predict(list(trainer.rest['vec']))
+# trainer.rest['predict'] = predict
 
 
 # from src.Visualize import TsneVisualize
