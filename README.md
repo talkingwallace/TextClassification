@@ -6,6 +6,10 @@
 # 详细内容:
 https://docs.google.com/document/d/1q3qJfScG5dLffodHK1DITBfR6CPoZvgeDNHdQRp_9LM/edit?usp=sharing
 
+或见仓库内:
+
+Knowledges discoveries based on text mining techniques.pdf
+
 # 须知
 ## 数据集
 现在的大文件都通过lfs管理 提交可就完事了
